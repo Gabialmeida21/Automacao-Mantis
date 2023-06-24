@@ -2,11 +2,6 @@
 using CSharpSeleniumExtentReportNetCoreTemplate.Flows;
 using CSharpSeleniumExtentReportNetCoreTemplate.Pages;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
 {
@@ -17,7 +12,6 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         GerenciarMarcadoresPage gerenciarMarcadoresPage;
         MainPage mainPage;
         #endregion
-
         [SetUp]
         public void RealizarLogin()
         {
@@ -26,11 +20,16 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         }
 
         [Test]
-        public void VerTarefasComSucesso()
+        public void CriarMarcador()
         {
             gerenciarMarcadoresPage = new GerenciarMarcadoresPage();
-
             mainPage = new MainPage();
+
+            #region Parameters
+            string nomeMarcador = "Teste Gabriela2";
+            string descricaoMarcador = "Preencher descrição para criar um marcador no Mantis";
+            string nomeAposCadastrarMarcador ="Teste Gabriela2";
+            #endregion
 
             mainPage.ClicarMenuGerenciar();
 
@@ -38,13 +37,42 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
 
             gerenciarMarcadoresPage.clicarCriarMarcador();
 
-            gerenciarMarcadoresPage.PreencherNomeMarcador("Teste Gabriela");
+            gerenciarMarcadoresPage.PreencherNomeMarcador(nomeMarcador);
 
-            gerenciarMarcadoresPage.PreencherDescricao("Preencher descrição para criar um marcador no Mantis");
+            gerenciarMarcadoresPage.PreencherDescricao(descricaoMarcador);
 
             gerenciarMarcadoresPage.ClicarMenuMarcador2();
 
+            Assert.AreEqual(nomeAposCadastrarMarcador, gerenciarMarcadoresPage.ValidarMarcador());
+
 
         }
+        [Test]
+        public void ApagarMarcador()
+        {
+            gerenciarMarcadoresPage = new GerenciarMarcadoresPage();
+            mainPage = new MainPage();
+
+            #region Parameters
+            string nomeMarcador = "Teste Gabriela2";
+            string descricaoMarcador = "Preencher descrição para criar um marcador no Mantis";
+            string nomeAposCadastrarMarcador = "Teste Gabriela2";
+            #endregion
+
+            mainPage.ClicarMenuGerenciar();
+
+            gerenciarMarcadoresPage.ClicarAbaMarcador();
+
+            gerenciarMarcadoresPage.clicarCriarMarcador();
+
+            gerenciarMarcadoresPage.ApagarMarcador();
+
+            gerenciarMarcadoresPage.ApagarMarcador();
+
+            Assert.AreEqual(nomeAposCadastrarMarcador, gerenciarMarcadoresPage.ValidarMarcador());
+
+
+        }
+
     }
 }

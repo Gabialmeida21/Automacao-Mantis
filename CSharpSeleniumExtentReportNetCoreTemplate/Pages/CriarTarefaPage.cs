@@ -11,7 +11,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
     public class CriarTarefaPage : PageBase
     {
         #region Mapping
-        By menuCriarTarefaButton = By.XPath("//a[@href='/bug_report_page.php']");
+        
         By selecionarProjetoComboBox = By.Id("select-project-id");
         By selecionarProjetoButton = By.XPath("//input[@value='Selecionar Projeto']");
         By categoriaComboBox = By.Id("category_id");
@@ -20,26 +20,9 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         By descricaoText = By.Id("description");
         By passosParaReproduzirText = By.Id("steps_to_reproduce");
         By criarTarefaButton = By.XPath("//input[@value='Criar Nova Tarefa']");
-        By selecionarProjetoGeral = By.Id("dropdown_projects_menu");
-        By selecionarTodosOsProjetosButton = By.XPath("//a[@href='/set_project.php?project_id=0']");
-
+        By mensagemSucessoTarefa = By.XPath("//div[@class='alert alert-success center']/p");
 
         #endregion
-
-        public void ClicarSelecionarProjetoGeral()
-        {
-            Click(selecionarProjetoGeral);
-        }
-
-        public void SelecionarTodosOsProjetos()
-        {
-            Click(selecionarTodosOsProjetosButton);
-        }
-
-        public void ClicarMenuCriarTarefa()
-        {
-            Click(menuCriarTarefaButton);
-        }
 
         public void SelecionarProjeto(String text)
 
@@ -87,6 +70,11 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         public void ClicarBotaoCriarNovaTarefa()
         {
             Click(criarTarefaButton);
+        }
+
+        public string RetornaMensagemSucesso()
+        {
+            return GetText(mensagemSucessoTarefa);
         }
 
     }

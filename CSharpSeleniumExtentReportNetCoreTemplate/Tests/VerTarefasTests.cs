@@ -15,6 +15,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
     {
         #region Pages and Flows Objects
         VerTarefasPage verTarefasPage;
+
         #endregion
 
         [SetUp]
@@ -29,7 +30,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         {
             verTarefasPage = new VerTarefasPage();
 
-            verTarefasPage.ClicarMenuVerTarefa();
+            //verTarefasPage.ClicarMenuVerTarefa();
 
 
 

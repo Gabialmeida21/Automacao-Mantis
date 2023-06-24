@@ -17,6 +17,8 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         By nomeMarcadorText = By.Id("tag-name");
         By descricaoMarcadorText = By.Id("tag-description");
         By criarMarcadorButton2 = By.XPath("//input[@value='Criar Marcador']");
+        By validarMarcadorCriado = By.XPath("//a[text()='Teste Gabriela2']");
+        By apagarMarcadorButton = By.XPath("//input[@value='Apagar Marcador']");
         #endregion
                         
 
@@ -43,6 +45,21 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         public void ClicarMenuMarcador2()
         {
             Click(criarMarcadorButton2);
+        }
+
+        public string ValidarMarcador()
+        {
+            return GetText(validarMarcadorCriado);
+        }
+
+        public void ClicarMarcador()
+        {
+            Click(validarMarcadorCriado);
+        }
+
+        public void ApagarMarcador()
+        {
+            Click(apagarMarcadorButton);
         }
     }
 }

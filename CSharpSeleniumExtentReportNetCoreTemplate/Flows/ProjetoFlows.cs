@@ -18,11 +18,11 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Flows
             mainPage = new MainPage();
         }
 
-        public string nomeProjeto = "Teste de Automação Web";
+        //public string nomeProjeto = "Teste de Automação Web";
         public string descricaoProjeto = "Teste de automação Mantis";
         #endregion
 
-        public void CriarNovoProjeto()
+        public void CriarNovoProjeto(string nomeProjeto)
         {
             mainPage.ClicarMenuGerenciar();
             gerenciarProjetosPage.AbaGerenciarProjetos();

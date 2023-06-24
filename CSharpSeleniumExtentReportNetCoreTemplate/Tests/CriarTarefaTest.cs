@@ -17,7 +17,10 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
     public class CriarTarefaTest : TestBase
     {
         #region Pages and Flows Objects
+        LoginPage loginPage;
+        MainPage mainPage;
         CriarTarefaPage criarTarefaPage;
+
         #endregion
 
         [SetUp]
@@ -25,6 +28,9 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         {
             LoginFlows loginFlows = new LoginFlows();
             loginFlows.EfetuarLogin("administrator", "administrator");
+
+            ProjetoFlows projetoFlows = new ProjetoFlows();
+            projetoFlows.CriarNovoProjeto("Teste Automação Mantis Web");
         }
 
         [Test]
@@ -32,31 +38,47 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         {
 
             criarTarefaPage = new CriarTarefaPage();
+            mainPage = new MainPage();
 
-            criarTarefaPage.ClicarSelecionarProjetoGeral();
+            #region Parameters
+            string mensagemSucesso = "Operação realizada com sucesso.";
 
-            criarTarefaPage.SelecionarTodosOsProjetos();
+            string selecionarProjeto = "Project 46";
+            string selecionarCategoria = "[Todos os Projetos] Teste Mantis";
+            string atribuicaoNome = "administrator";
+            string resumo = "Tarefa de Teste Mantis2";
+            string descricao = "Desafio Automação Web";
+            string passosReproduzir = "1.Realizar Login";
 
-            criarTarefaPage.ClicarMenuCriarTarefa();
-            
-            criarTarefaPage.SelecionarProjeto("Project 46");
+
+            #endregion
+
+
+            mainPage.ClicarSelecionarProjetoGeral();
+
+            mainPage.SelecionarTodosOsProjetos();
+
+            mainPage.ClicarMenuCriarTarefa();
+
+            criarTarefaPage.SelecionarProjeto(selecionarProjeto);
 
             criarTarefaPage.ClicarBotaoSelecionarProjeto();
 
-            criarTarefaPage.SelecionarCategoria("[Todos os Projetos] Teste Mantis");
+            criarTarefaPage.SelecionarCategoria(selecionarCategoria);
 
-            criarTarefaPage.SelecionarAtribuicao("administrator");
+            criarTarefaPage.SelecionarAtribuicao(atribuicaoNome);
 
-            criarTarefaPage.PreencherResumo("Tarefa de Teste Mantis2");
+            criarTarefaPage.PreencherResumo(resumo);
 
-            criarTarefaPage.PreencherDescricao("Desafio Automação Web");
+            criarTarefaPage.PreencherDescricao(descricao);
 
-            criarTarefaPage.PreencherPassosParaReproduzir("1.Realizar Login");
+            criarTarefaPage.PreencherPassosParaReproduzir(passosReproduzir);
 
             criarTarefaPage.ClicarBotaoCriarNovaTarefa();
-            
-            
-            
+
+            Assert.AreEqual(mensagemSucesso, criarTarefaPage.RetornaMensagemSucesso());
+
+
         }
     }
 }

@@ -11,14 +11,11 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
     public class VerTarefasPage : PageBase
     {
         #region Mapping
-        By verTarefaButton = By.XPath("//a[@href='/view_all_bug_page.php']");
+        
         
         #endregion
 
-        public void ClicarMenuVerTarefa()
-        {
-            Click(verTarefaButton);
-        }
+        
 
     }
 
