@@ -21,7 +21,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Flows
         #endregion
 
         string nomeVerdadeiro = "Gabriela Almeida";
-        string email = "gabriela10@teste.com";
+        string email = "gabriela11@teste.com";
         string nivelAcesso = "desenvolvedor";
 
         public void CriarNovoUsuario(string nomeUsuario)

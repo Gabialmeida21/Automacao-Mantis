@@ -153,6 +153,11 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Bases
             ExtentReportHelpers.AddTestInfo(3, "RETURN: " + result);
             return result;
         }
+
+        protected void Clear(By locator)
+        {
+            WaitForElement(locator).Clear();
+        }
         #endregion
 
         #region JavaScript Actions

@@ -25,11 +25,20 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         By mensagemErroUsuarioExistente = By.XPath("//div[@class='alert alert-danger']/p[2]");
         By filtroUsuarioText = By.XPath("//input[@class='input-sm']");
         By aplicarFiltroButton = By.XPath("//input[@value='Aplicar Filtro']");
-        By usuarioLink = By.XPath("//a[text()='Gabriela Teste10']");
+        By usuarioLink = By.XPath("//a[text()='Gabriela Teste11']");
         By atualizarUsuarioButton = By.XPath("//input[@value='Atualizar Usuário']");
         By mensagemConfirmarEditarUsuario = By.XPath("//div[@class='alert alert-success center']/p");
         By nivelAcessoEditarDropDown = By.Id("edit-access-level");
-
+        By editarNomeUsuarioText = By.Id("edit-username");
+        By editarNomeVerdadeiroText = By.Id("edit-realname");
+        By editarNivelAcessoDropDown = By.Id("edit-access-level");
+        By redefinirSenhaButton = By.XPath("//input[@value='Redefinir Senha']");
+        By mensagemRedefinirSenha = By.XPath("//div[@class='alert alert-success center']/p");
+        By apagarUsuarioButton = By.XPath("//input[@value='Apagar Usuário']");
+        By apagarContaButton = By.XPath("//input[@value='Apagar Conta']");
+        By representarUsuarioButton = By.XPath("//input[@value='Representar Usuário']");
+        By cliqueAquiParaProsseguirButton = By.XPath("//a[@href='my_view_page.php']");
+        
 
         #endregion
 
@@ -58,7 +67,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
             SendKeys(emailText, text);
         }
 
-        public void SelecionarNivelAcesso(string text) 
+        public void SelecionarNivelAcesso(string text)
         {
             ComboBoxSelectByVisibleText(nivelAcessoDropDown, text);
         }
@@ -127,7 +136,70 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
             ComboBoxSelectByVisibleText(nivelAcessoEditarDropDown, text);
         }
 
+        public void ApagarNomeUsuarioAoEditar()
+        {
+            Clear(editarNomeUsuarioText);
+        }
 
+        public void EditarNomeUsuario(string text)
+        {
+            SendKeys(editarNomeUsuarioText, text);
+        }
+
+        public void ApagarEmailAoEditar()
+        {
+            Clear(emailText);
+        }
+
+        public void EditarEmail(string text)
+        {
+            SendKeys(emailText, text);
+        }
+
+        public void ApagarNomeVerdadeiro()
+        {
+            Clear(editarNomeVerdadeiroText);
+        }
+
+        public void EditarNomeVerdadeiro(string text)
+        {
+            SendKeys(editarNomeVerdadeiroText, text);
+        }
+
+        public void EditarSelecionarNivelAcesso(string text)
+        {
+            ComboBoxSelectByVisibleText(editarNivelAcessoDropDown, text);
+        }
+
+        public void ClicarRedefinirSenha()
+        {
+            Click(redefinirSenhaButton);
+        }
+
+        public string RetornaMensagemSolicitacaoRedefinirSenha()
+        {
+            return GetText(mensagemRedefinirSenha);
+        }
+
+        public void ClicarApagarUsuario()
+        {
+            Click(apagarUsuarioButton);
+        }
+
+        public void ClicarApagarConta()
+        {
+            Click(apagarContaButton);
+        }
+
+        public void ClicarRepresentarUsuario()
+        {
+            Click(representarUsuarioButton);
+        }
+
+        public void ClicarParaProsseguir()
+        {
+            Click(cliqueAquiParaProsseguirButton);
+        }
 
 
     }
