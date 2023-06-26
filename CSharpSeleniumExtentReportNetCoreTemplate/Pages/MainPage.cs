@@ -1,4 +1,4 @@
-﻿using CSharpSeleniumExtentReportNetCoreTemplate.Bases;
+﻿ using CSharpSeleniumExtentReportNetCoreTemplate.Bases;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -18,6 +18,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         By selecionarTodosOsProjetosButton = By.XPath("//a[@href='/set_project.php?project_id=0']");
         By menuCriarTarefaButton = By.XPath("//a[@href='/bug_report_page.php']");
         By menuVerTarefaButton = By.XPath("//a[@href='/view_all_bug_page.php']");
+
         #endregion
 
         #region Actions

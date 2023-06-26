@@ -29,11 +29,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         {
             ComboBoxSelectByVisibleText(selecionarProjetoComboBox, text);
         }
-
-        /*public void SelecionarProjetoComboBox(string text)
-        {
-            ComboBoxSelectByVisibleText(selecionarProjetoComboBox, text);
-        }*/             
+           
                 
 
         public void ClicarBotaoSelecionarProjeto()

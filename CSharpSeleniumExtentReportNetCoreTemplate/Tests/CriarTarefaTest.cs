@@ -24,7 +24,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         #endregion
 
         [SetUp]
-        public void RealizarLogin()
+        public void AntesDeComecarOsTestes()
         {
             LoginFlows loginFlows = new LoginFlows();
             loginFlows.EfetuarLogin("administrator", "administrator");

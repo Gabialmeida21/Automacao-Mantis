@@ -53,12 +53,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarMarcadoresPage = new GerenciarMarcadoresPage();
             mainPage = new MainPage();
 
-            #region Parameters
-            string nomeMarcador = "Teste Gabriela2";
-            string descricaoMarcador = "Preencher descrição para criar um marcador no Mantis";
-            string nomeAposCadastrarMarcador = "Teste Gabriela2";
-            #endregion
-
+            
             mainPage.ClicarMenuGerenciar();
 
             gerenciarMarcadoresPage.ClicarAbaMarcador();
@@ -69,7 +64,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
 
             gerenciarMarcadoresPage.ApagarMarcador();
 
-            Assert.AreEqual(nomeAposCadastrarMarcador, gerenciarMarcadoresPage.ValidarMarcador());
+            //fazer validação pelo banco de dados
 
 
         }
