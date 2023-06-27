@@ -17,6 +17,14 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         MainPage mainPage;
         #endregion
 
+        #region Data Driven Providers
+        public static IEnumerable Login()
+        {
+            return GeneralHelpers.ReturnCSVData(GeneralHelpers.GetProjectPath() + "DataDriven\\Login.csv");
+        }
+
+        #endregion
+
         [Test]
         public void RealizarLoginComSucesso()
         {
@@ -25,6 +33,26 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
 
             #region Parameters
             string usuario = "administrator";
+            string senha = "administrator";
+            #endregion
+
+            loginPage.PreencherUsuario(usuario);
+            loginPage.ClicarEmLogin();
+            loginPage.PreencherSenha(senha);
+            loginPage.ClicarEmLogin();
+
+            Assert.AreEqual(usuario, mainPage.RetornaUsernameDasInformacoesDeLogin());
+        }
+
+        [Test, TestCaseSource("Login")]
+        public void RealizarLoginComSucessoUsandoDataDrive(ArrayList testData)
+        {
+            loginPage = new LoginPage();
+            mainPage = new MainPage();
+
+            #region Parameters
+            string usuario = testData[0].ToString();
+            //string usuario = "administrator";
             string senha = "administrator";
             #endregion
 

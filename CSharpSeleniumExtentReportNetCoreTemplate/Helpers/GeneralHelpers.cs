@@ -98,5 +98,14 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Helpers
             text = text.Replace(currentValue, newValue);
             return text;
         }
+
+        public static string ReturnProjectPath()
+        {
+            string pth = System.Reflection.Assembly.GetCallingAssembly().CodeBase;
+
+            string actualPath = pth.Substring(0, pth.LastIndexOf("bin"));
+
+            return new Uri(actualPath).LocalPath;
+        }
     }
 }
