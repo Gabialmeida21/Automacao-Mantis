@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MySqlConnector;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -10,21 +12,21 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Helpers
 {
     public class DataBaseHelpers
     {
-        private static SqlConnection GetDBConnection()
+        private static MySqlConnection GetDBConnection()
         {
             string connectionString = "Data Source=" + BuilderJson.ReturnParameterAppSettings("DB_URL") + "," + BuilderJson.ReturnParameterAppSettings("DB_PORT") + ";" +
                                       "Initial Catalog=" + BuilderJson.ReturnParameterAppSettings("DB_NAME") + ";" +
                                       "User ID=" + BuilderJson.ReturnParameterAppSettings("DB_USER") + "; " +
                                       "Password=" + BuilderJson.ReturnParameterAppSettings("DB_PASSWORD") + ";";
-          
-            SqlConnection connection = new SqlConnection(connectionString);
+
+            MySqlConnection connection = new MySqlConnection(connectionString);
 
             return connection;
         }
 
         public static void ExecuteQuery(string query)
         {
-            using (SqlCommand cmd = new SqlCommand(query, GetDBConnection()))
+            using (MySqlCommand cmd = new MySqlCommand(query, GetDBConnection()))
             {
                 cmd.CommandTimeout = Int32.Parse(BuilderJson.ReturnParameterAppSettings("DB_CONNECTION_TIMEOUT"));
                 cmd.Connection.Open();
@@ -38,7 +40,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Helpers
             DataSet ds = new DataSet();
             List<string> lista = new List<string>();
 
-            using (SqlCommand cmd = new SqlCommand(query, GetDBConnection()))
+            using (MySqlCommand cmd = new MySqlCommand(query, GetDBConnection()))
             {
                 cmd.CommandTimeout = Int32.Parse(BuilderJson.ReturnParameterAppSettings("DB_CONNECTION_TIMEOUT"));
                 cmd.Connection.Open();

@@ -16,5 +16,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.DataBaseSteps
 
             return DataBaseHelpers.RetornaDadosQuery(query);
         }
+
+        
     }
 }
