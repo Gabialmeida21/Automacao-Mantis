@@ -25,7 +25,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         By mensagemErroUsuarioExistente = By.XPath("//div[@class='alert alert-danger']/p[2]");
         By filtroUsuarioText = By.XPath("//input[@class='input-sm']");
         By aplicarFiltroButton = By.XPath("//input[@value='Aplicar Filtro']");
-        By usuarioLink = By.XPath("//a[text()='Gabriela Teste11']");
+        //By usuarioLink = By.XPath("//a[text()='Gabriela']");
         By atualizarUsuarioButton = By.XPath("//input[@value='Atualizar Usuário']");
         By mensagemConfirmarEditarUsuario = By.XPath("//div[@class='alert alert-success center']/p");
         By nivelAcessoEditarDropDown = By.Id("edit-access-level");
@@ -116,8 +116,9 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
             Click(aplicarFiltroButton);
         }
 
-        public void ClicarUsuarioParaAlterar()
+        public void ClicarUsuarioParaAlterar(string nomeUsuario)
         {
+            By usuarioLink = By.XPath($"//a[text()='{nomeUsuario}']");
             Click(usuarioLink);
         }
 

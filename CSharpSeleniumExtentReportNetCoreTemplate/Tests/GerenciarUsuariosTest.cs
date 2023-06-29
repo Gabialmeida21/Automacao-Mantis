@@ -1,4 +1,5 @@
 ﻿using CSharpSeleniumExtentReportNetCoreTemplate.Bases;
+using CSharpSeleniumExtentReportNetCoreTemplate.DataBaseSteps;
 using CSharpSeleniumExtentReportNetCoreTemplate.Flows;
 using CSharpSeleniumExtentReportNetCoreTemplate.Pages;
 using NUnit.Framework;
@@ -21,6 +22,14 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         UsuarioFlows usuarioFlows;
         #endregion
 
+        #region Parameters
+        string nomeUsuario = "Gabriela";
+        string nomeVerdadeiro = "Gabriela Almeida";
+        string email = "gabrielaalmeida@teste.com";
+        string nivelAcesso = "desenvolvedor";
+        #endregion
+
+
         [SetUp]
         public void RealizarLogin()
         {
@@ -35,12 +44,11 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             mainPage = new MainPage();
 
             #region Parameters
-            string nomeUsuario = "Gabi";
             string nomeVerdadeiro = "Gabriela Almeida";
-            string email = "gabriela@teste.com";
             string nivelAcesso = "desenvolvedor";
-
             #endregion
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
 
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
@@ -52,7 +60,6 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarCriarUsuario();
 
             Assert.That(gerenciarUsuariosPage.RetornaMensagemSucesso().Contains("criado com um nível de acesso de desenvolvedor"));
-
         }
 
         [Test]
@@ -60,8 +67,6 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         {
             gerenciarUsuariosPage = new GerenciarUsuariosPage();
             mainPage = new MainPage();
-
-
 
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
@@ -78,14 +83,10 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         {
             gerenciarUsuariosPage = new GerenciarUsuariosPage();
             mainPage = new MainPage();
+            usuarioFlows = new UsuarioFlows();
 
-            #region Parameters
-            string nomeUsuario = "Gabi";
-            string nomeVerdadeiro = "Gabriela Almeida";
-            string email = "gabriela@teste.com";
-            string nivelAcesso = "desenvolvedor";
-
-            #endregion
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
+            usuarioFlows.CriarNovoUsuario(nomeUsuario, email);
 
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
@@ -100,18 +101,13 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         }
 
         [Test]
-        public void CriarUsuarioSemPreencherNome()
+        public void CriarUsuarioSemPreencherNomeVerdadeiro()
         {
             gerenciarUsuariosPage = new GerenciarUsuariosPage();
             mainPage = new MainPage();
             usuarioFlows = new UsuarioFlows();
 
-            #region Parameters
-            string nomeUsuario = "Gabriela";
-            string email = "gabriela2@teste.com";
-            string nivelAcesso = "desenvolvedor";
-
-            #endregion
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
 
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
@@ -122,7 +118,6 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarCriarUsuario();
 
             Assert.That(gerenciarUsuariosPage.RetornaMensagemSucesso().Contains("criado com um nível de acesso de desenvolvedor"));
-
         }
 
         [Test]
@@ -131,12 +126,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage = new GerenciarUsuariosPage();
             mainPage = new MainPage();
 
-            #region Parameters
-            string nomeUsuario = "Gabriela";
-            string nomeVerdadeiro = "Gabriela Almeida";
-            string nivelAcesso = "desenvolvedor";
-
-            #endregion
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
 
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
@@ -147,27 +137,27 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarCriarUsuario();
 
             Assert.That(gerenciarUsuariosPage.RetornaMensagemSucesso().Contains("criado com um nível de acesso de desenvolvedor"));
-
         }
 
         [Test]
         public void CriarUsuarioComEmailJaExistente()
         {
+            
             gerenciarUsuariosPage = new GerenciarUsuariosPage();
             mainPage = new MainPage();
+            usuarioFlows = new UsuarioFlows();
 
             #region Parameters
-            string nomeUsuario = "Gabriela Teste";
-            string nomeVerdadeiro = "Gabriela Almeida Teste";
-            string email = "gabriela@teste.com";
-            string nivelAcesso = "desenvolvedor";
-
+            string nomeUsuarioNovo = "Gabriela Teste Email Ja Utilizado";
             #endregion
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
+            usuarioFlows.CriarNovoUsuario(nomeUsuario, email);
 
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
             gerenciarUsuariosPage.ClicarCriarNovaConta();
-            gerenciarUsuariosPage.PreencherNomeUsuario(nomeUsuario);
+            gerenciarUsuariosPage.PreencherNomeUsuario(nomeUsuarioNovo);
             gerenciarUsuariosPage.PreencherNomeVerdadeiro(nomeVerdadeiro);
             gerenciarUsuariosPage.PreencherEmail(email);
             gerenciarUsuariosPage.SelecionarNivelAcesso(nivelAcesso);
@@ -183,26 +173,22 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             mainPage = new MainPage();
 
             #region Parameters
-            string nomeUsuario = "Gabriela Teste";
-            string nomeVerdadeiro = "Gabriela Almeida Teste";
-            string email = "email";
-            string nivelAcesso = "desenvolvedor";
-
+            string emailInvalido = "email";
             #endregion
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
 
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
             gerenciarUsuariosPage.ClicarCriarNovaConta();
             gerenciarUsuariosPage.PreencherNomeUsuario(nomeUsuario);
             gerenciarUsuariosPage.PreencherNomeVerdadeiro(nomeVerdadeiro);
-            gerenciarUsuariosPage.PreencherEmail(email);
+            gerenciarUsuariosPage.PreencherEmail(emailInvalido);
             gerenciarUsuariosPage.SelecionarNivelAcesso(nivelAcesso);
             gerenciarUsuariosPage.ClicarCriarUsuario();
 
             Assert.That(gerenciarUsuariosPage.RetornaMensagemErro().Contains("E-mail inválido."));
         }
-
-
 
         [Test]
         public void EditarNivelAcessoUsuarioComSucesso()
@@ -211,26 +197,23 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             mainPage = new MainPage();
             usuarioFlows = new UsuarioFlows();
 
-
             #region Parameters
-            string nomeUsuario = "Gabriela Teste10";
-            string nivelAcesso = "gerente";
+            string nivelAcessoEdicao = "gerente";
             string mensagemSucessoEditarUsuario = "Operação realizada com sucesso.";
             #endregion
 
-            usuarioFlows.CriarNovoUsuario(nomeUsuario);
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
+            usuarioFlows.CriarNovoUsuario(nomeUsuario, email);
+
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
             gerenciarUsuariosPage.PreencherFiltroPesquisarUsuario(nomeUsuario);
             gerenciarUsuariosPage.ClicarAplicarFiltro();
-            gerenciarUsuariosPage.ClicarUsuarioParaAlterar();
-            gerenciarUsuariosPage.SelecionarNivelAcessoAoEditar(nivelAcesso);
+            gerenciarUsuariosPage.ClicarUsuarioParaAlterar(nomeUsuario);
+            gerenciarUsuariosPage.SelecionarNivelAcessoAoEditar(nivelAcessoEdicao);
             gerenciarUsuariosPage.ClicarBotaoAtualizarUsuario();
 
-
             Assert.AreEqual(mensagemSucessoEditarUsuario, gerenciarUsuariosPage.RetornaMensagemSucessoOperacaoRealizada());
-
-
         }
 
         [Test]
@@ -240,26 +223,27 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             mainPage = new MainPage();
             usuarioFlows = new UsuarioFlows();
 
-
             #region Parameters
-            string nomeUsuario = "Gabriela Teste11";
             string mensagemSucessoEditarUsuario = "Operação realizada com sucesso.";
             string editarNomeUsuario = "Gabriela editado";
             #endregion
 
-            usuarioFlows.CriarNovoUsuario(nomeUsuario);
+            UsuariosDBSteps.DeletarUsuarioCriado(editarNomeUsuario);
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
+            usuarioFlows.CriarNovoUsuario(nomeUsuario, email);
+            
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
             gerenciarUsuariosPage.PreencherFiltroPesquisarUsuario(nomeUsuario);
             gerenciarUsuariosPage.ClicarAplicarFiltro();
-            gerenciarUsuariosPage.ClicarUsuarioParaAlterar();
+            gerenciarUsuariosPage.ClicarUsuarioParaAlterar(nomeUsuario);
             gerenciarUsuariosPage.ApagarNomeUsuarioAoEditar();
             gerenciarUsuariosPage.EditarNomeUsuario(editarNomeUsuario);
             gerenciarUsuariosPage.ClicarBotaoAtualizarUsuario();
 
-
             Assert.AreEqual(mensagemSucessoEditarUsuario, gerenciarUsuariosPage.RetornaMensagemSucessoOperacaoRealizada());
-
+           
+            UsuariosDBSteps.DeletarUsuarioCriado(editarNomeUsuario);
         }
 
         [Test]
@@ -269,25 +253,26 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             mainPage = new MainPage();
             usuarioFlows = new UsuarioFlows();
 
-
             #region Parameters
-            string nomeUsuario = "Gabriela Teste11";
-            string editarNomeUsuario = "Gabriela Teste9";
+            string nomeUsuarioExistente = "Gabriela editado nome existente";
+            string emailUsuarioExistente = "gabrielaalmeida2@teste.com";
             #endregion
 
-            usuarioFlows.CriarNovoUsuario(nomeUsuario);
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuarioExistente);
+            usuarioFlows.CriarNovoUsuario(nomeUsuario, email);
+            usuarioFlows.CriarNovoUsuario(nomeUsuarioExistente, emailUsuarioExistente);
+
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
             gerenciarUsuariosPage.PreencherFiltroPesquisarUsuario(nomeUsuario);
             gerenciarUsuariosPage.ClicarAplicarFiltro();
-            gerenciarUsuariosPage.ClicarUsuarioParaAlterar();
+            gerenciarUsuariosPage.ClicarUsuarioParaAlterar(nomeUsuario);
             gerenciarUsuariosPage.ApagarNomeUsuarioAoEditar();
-            gerenciarUsuariosPage.EditarNomeUsuario(editarNomeUsuario);
+            gerenciarUsuariosPage.EditarNomeUsuario(nomeUsuarioExistente);
             gerenciarUsuariosPage.ClicarBotaoAtualizarUsuario();
 
-
             Assert.That(gerenciarUsuariosPage.RetornaMensagemErroUsuarioExistente().Contains("Este nome de usuário já está sendo usado. Por favor, volte e selecione um outro."));
-
         }
 
         [Test]
@@ -297,26 +282,23 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             mainPage = new MainPage();
             usuarioFlows = new UsuarioFlows();
 
-
             #region Parameters
-            string nomeUsuario = "Gabriela Teste11";
             string mensagemSucessoEditarUsuario = "Operação realizada com sucesso.";
             string editarEmailUsuario = "gabrielaeditado@gmail.com";
             #endregion
 
-            usuarioFlows.CriarNovoUsuario(nomeUsuario);
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
+            usuarioFlows.CriarNovoUsuario(nomeUsuario, email);
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
             gerenciarUsuariosPage.PreencherFiltroPesquisarUsuario(nomeUsuario);
             gerenciarUsuariosPage.ClicarAplicarFiltro();
-            gerenciarUsuariosPage.ClicarUsuarioParaAlterar();
+            gerenciarUsuariosPage.ClicarUsuarioParaAlterar(nomeUsuario);
             gerenciarUsuariosPage.ApagarEmailAoEditar();
             gerenciarUsuariosPage.EditarEmail(editarEmailUsuario);
             gerenciarUsuariosPage.ClicarBotaoAtualizarUsuario();
 
-
             Assert.AreEqual(mensagemSucessoEditarUsuario, gerenciarUsuariosPage.RetornaMensagemSucessoOperacaoRealizada());
-
         }
 
         [Test]
@@ -326,25 +308,27 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             mainPage = new MainPage();
             usuarioFlows = new UsuarioFlows();
 
-
             #region Parameters
-            string nomeUsuario = "Gabriela Teste11";
-            string editarEmailUsuarioJaExistente = "gabriela6@teste.com";
+            string nomeUsuario2 = "Gabriela Com email existente";
+            string emailUsuario2 = "gabriela@teste.com";
+            string emailExistente = "gabriela@teste.com";
             #endregion
 
-            usuarioFlows.CriarNovoUsuario(nomeUsuario);
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario2);
+            usuarioFlows.CriarNovoUsuario(nomeUsuario, email);
+            usuarioFlows.CriarNovoUsuario(nomeUsuario2, emailUsuario2);
+
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
             gerenciarUsuariosPage.PreencherFiltroPesquisarUsuario(nomeUsuario);
             gerenciarUsuariosPage.ClicarAplicarFiltro();
-            gerenciarUsuariosPage.ClicarUsuarioParaAlterar();
+            gerenciarUsuariosPage.ClicarUsuarioParaAlterar(nomeUsuario);
             gerenciarUsuariosPage.ApagarEmailAoEditar();
-            gerenciarUsuariosPage.EditarEmail(editarEmailUsuarioJaExistente);
+            gerenciarUsuariosPage.EditarEmail(emailExistente);
             gerenciarUsuariosPage.ClicarBotaoAtualizarUsuario();
 
-
             Assert.That(gerenciarUsuariosPage.RetornaMensagemErro().Contains("Este e-mail já está sendo usado. Por favor, volte e selecione outro."));
-
         }
 
         [Test]
@@ -354,25 +338,23 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             mainPage = new MainPage();
             usuarioFlows = new UsuarioFlows();
 
-
             #region Parameters
-            string nomeUsuario = "Gabriela Teste11";
-            string editarEmailInvalido = "email";
+            string emailInvalido = "email";
             #endregion
 
-            usuarioFlows.CriarNovoUsuario(nomeUsuario);
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
+            usuarioFlows.CriarNovoUsuario(nomeUsuario, email);
+
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
             gerenciarUsuariosPage.PreencherFiltroPesquisarUsuario(nomeUsuario);
             gerenciarUsuariosPage.ClicarAplicarFiltro();
-            gerenciarUsuariosPage.ClicarUsuarioParaAlterar();
+            gerenciarUsuariosPage.ClicarUsuarioParaAlterar(nomeUsuario);
             gerenciarUsuariosPage.ApagarEmailAoEditar();
-            gerenciarUsuariosPage.EditarEmail(editarEmailInvalido);
+            gerenciarUsuariosPage.EditarEmail(emailInvalido);
             gerenciarUsuariosPage.ClicarBotaoAtualizarUsuario();
 
-
             Assert.That(gerenciarUsuariosPage.RetornaMensagemErro().Contains("E-mail inválido."));
-
         }
 
         [Test]
@@ -382,27 +364,24 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             mainPage = new MainPage();
             usuarioFlows = new UsuarioFlows();
 
-
             #region Parameters
-            string nomeUsuario = "Gabriela Teste11";
             string mensagemSucessoEditarUsuario = "Operação realizada com sucesso.";
             string editarNomeVerdadeiro = "Gabriela Nome Verdadeiro";
             #endregion
 
-            usuarioFlows.CriarNovoUsuario(nomeUsuario);
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
+            usuarioFlows.CriarNovoUsuario(nomeUsuario, email);
+
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
             gerenciarUsuariosPage.PreencherFiltroPesquisarUsuario(nomeUsuario);
             gerenciarUsuariosPage.ClicarAplicarFiltro();
-            gerenciarUsuariosPage.ClicarUsuarioParaAlterar();
+            gerenciarUsuariosPage.ClicarUsuarioParaAlterar(nomeUsuario);
             gerenciarUsuariosPage.ApagarNomeVerdadeiro();
             gerenciarUsuariosPage.EditarNomeVerdadeiro(editarNomeVerdadeiro);
-            
             gerenciarUsuariosPage.ClicarBotaoAtualizarUsuario();
 
-
             Assert.AreEqual(mensagemSucessoEditarUsuario, gerenciarUsuariosPage.RetornaMensagemSucessoOperacaoRealizada());
-
         }
 
         [Test]
@@ -412,24 +391,23 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             mainPage = new MainPage();
             usuarioFlows = new UsuarioFlows();
 
-
             #region Parameters
-            string nomeUsuario = "Gabriela Teste11";
             string mensagemSucessoEditarUsuario = "Operação realizada com sucesso.";
             string editarNivelAcesso = "gerente";
             #endregion
 
-            usuarioFlows.CriarNovoUsuario(nomeUsuario);
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
+            usuarioFlows.CriarNovoUsuario(nomeUsuario, email);
+
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
             gerenciarUsuariosPage.PreencherFiltroPesquisarUsuario(nomeUsuario);
             gerenciarUsuariosPage.ClicarAplicarFiltro();
-            gerenciarUsuariosPage.ClicarUsuarioParaAlterar();
+            gerenciarUsuariosPage.ClicarUsuarioParaAlterar(nomeUsuario);
             gerenciarUsuariosPage.EditarSelecionarNivelAcesso(editarNivelAcesso);
             gerenciarUsuariosPage.ClicarBotaoAtualizarUsuario();
                        
             Assert.AreEqual(mensagemSucessoEditarUsuario, gerenciarUsuariosPage.RetornaMensagemSucessoOperacaoRealizada());
-
         }
 
         [Test]
@@ -439,24 +417,17 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             mainPage = new MainPage();
             usuarioFlows = new UsuarioFlows();
 
-            #region Parameters
-            string nomeUsuario = "Gabriela Teste11";
-            
-            
-            #endregion
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
+            usuarioFlows.CriarNovoUsuario(nomeUsuario, email);
 
-            usuarioFlows.CriarNovoUsuario(nomeUsuario);
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
             gerenciarUsuariosPage.PreencherFiltroPesquisarUsuario(nomeUsuario);
             gerenciarUsuariosPage.ClicarAplicarFiltro();
-            gerenciarUsuariosPage.ClicarUsuarioParaAlterar();
+            gerenciarUsuariosPage.ClicarUsuarioParaAlterar(nomeUsuario);
             gerenciarUsuariosPage.ClicarRedefinirSenha();
 
-
-
             Assert.That(gerenciarUsuariosPage.RetornaMensagemSolicitacaoRedefinirSenha().Contains("Uma solicitação de confirmação foi enviada ao endereço de e-mail do usuário selecionado. Através deste, o usuário será capaz de alterar sua senha."));
-
         }
 
         [Test]
@@ -467,21 +438,19 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             usuarioFlows = new UsuarioFlows();
 
             #region Parameters
-            string nomeUsuario = "Gabriela Teste11";
             string mensagemSucesso = "Operação realizada com sucesso.";
-
             #endregion
 
-            usuarioFlows.CriarNovoUsuario(nomeUsuario);
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
+            usuarioFlows.CriarNovoUsuario(nomeUsuario, email);
+
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
             gerenciarUsuariosPage.PreencherFiltroPesquisarUsuario(nomeUsuario);
             gerenciarUsuariosPage.ClicarAplicarFiltro();
-            gerenciarUsuariosPage.ClicarUsuarioParaAlterar();
+            gerenciarUsuariosPage.ClicarUsuarioParaAlterar(nomeUsuario);
             gerenciarUsuariosPage.ClicarApagarUsuario();
             gerenciarUsuariosPage.ClicarApagarConta();
-
-
 
             Assert.AreEqual(mensagemSucesso, gerenciarUsuariosPage.RetornaMensagemSucessoOperacaoRealizada());
         }
@@ -493,22 +462,16 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             mainPage = new MainPage();
             usuarioFlows = new UsuarioFlows();
 
-            #region Parameters
-            string nomeUsuario = "Gabriela Teste11";
-            
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
+            usuarioFlows.CriarNovoUsuario(nomeUsuario, email);
 
-            #endregion
-
-            usuarioFlows.CriarNovoUsuario(nomeUsuario);
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
             gerenciarUsuariosPage.PreencherFiltroPesquisarUsuario(nomeUsuario);
             gerenciarUsuariosPage.ClicarAplicarFiltro();
-            gerenciarUsuariosPage.ClicarUsuarioParaAlterar();
+            gerenciarUsuariosPage.ClicarUsuarioParaAlterar(nomeUsuario);
             gerenciarUsuariosPage.ClicarRepresentarUsuario();
             gerenciarUsuariosPage.ClicarParaProsseguir();
-
-
 
             Assert.AreEqual(nomeUsuario, mainPage.RetornaUsernameDasInformacoesDeLogin());
         }
