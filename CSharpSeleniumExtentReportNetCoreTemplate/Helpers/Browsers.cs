@@ -37,6 +37,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Helpers
             chromeOptions.AddArgument("no-sandbox");
             chromeOptions.AddArgument("--allow-running-insecure-content");
             chromeOptions.AddArgument("--lang=pt-BR");
+            chromeOptions.AddArgument("start-maximized");
 
             return new RemoteWebDriver(new Uri(seleniumHub), chromeOptions.ToCapabilities()); ;
         }
@@ -100,6 +101,11 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Helpers
         public static IWebDriver GetRemoteEdge()
         {
             EdgeOptions edgeOptions = new EdgeOptions();
+
+            edgeOptions.AddArgument("no-sandbox");
+            edgeOptions.AddArgument("--allow-running-insecure-content");
+            edgeOptions.AddArgument("--lang=pt-BR");
+            edgeOptions.AddArgument("start-maximized");
 
             return new RemoteWebDriver(new Uri(seleniumHub), edgeOptions.ToCapabilities());
         }
