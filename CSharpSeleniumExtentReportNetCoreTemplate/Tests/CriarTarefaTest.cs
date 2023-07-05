@@ -17,7 +17,6 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
     public class CriarTarefaTest : TestBase
     {
         #region Pages and Flows Objects
-        LoginPage loginPage;
         MainPage mainPage;
         CriarTarefaPage criarTarefaPage;
 
@@ -43,7 +42,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             #region Parameters
             string mensagemSucesso = "Operação realizada com sucesso.";
 
-            string selecionarProjeto = "Project 46";
+            string selecionarProjeto = "Teste Automação Mantis Web";
             string selecionarCategoria = "[Todos os Projetos] Teste Mantis";
             string atribuicaoNome = "administrator";
             string resumo = "Tarefa de Teste Mantis2";
@@ -77,7 +76,6 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             criarTarefaPage.ClicarBotaoCriarNovaTarefa();
 
             Assert.AreEqual(mensagemSucesso, criarTarefaPage.RetornaMensagemSucesso());
-
 
         }
     }

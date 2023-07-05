@@ -55,6 +55,11 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         {
             Click(menuVerTarefaButton);
         }
+        public void SelecionarProjetoEspecificoNoMenuDropDown(string nomeProjeto)
+        {
+            By selecionarProjetoDropDown = By.XPath($"//a[@href='{nomeProjeto}']");
+            Click(selecionarProjetoDropDown);
+        }
         #endregion
 
 

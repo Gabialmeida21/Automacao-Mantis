@@ -38,9 +38,9 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         }
 
 
-        public void SelecionarCategoria(string text)
+        public void SelecionarCategoria(string nomeCategoria)
         {
-            ComboBoxSelectByVisibleText(categoriaComboBox, text);
+            ComboBoxSelectByVisibleText(categoriaComboBox, "[Todos os Projetos] " + nomeCategoria);
         }
 
         public void SelecionarAtribuicao(String text)

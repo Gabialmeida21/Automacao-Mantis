@@ -19,16 +19,14 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Flows
             criarTarefaPage = new CriarTarefaPage();
             mainPage = new MainPage();
         }
-
-        public string selecionarProjeto = "Project 46";
-        public string selecionarCategoria = "[Todos os Projetos] Teste Mantis";
+        
         public string atribuicaoNome = "administrator";
         public string resumo = "Tarefa de Teste Mantis2";
         public string descricao = "Desafio Automação Web";
         public string passosReproduzir = "1.Realizar Login";
 
 
-        public void CriarNovaTarefa()
+        public void CriarNovaTarefa(string nomeProjeto, string nomeCategoria)
         {
             mainPage.ClicarSelecionarProjetoGeral();
 
@@ -36,11 +34,11 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Flows
 
             mainPage.ClicarMenuCriarTarefa();
 
-            criarTarefaPage.SelecionarProjeto(selecionarProjeto);
+            criarTarefaPage.SelecionarProjeto(nomeProjeto);
 
             criarTarefaPage.ClicarBotaoSelecionarProjeto();
 
-            criarTarefaPage.SelecionarCategoria(selecionarCategoria);
+            criarTarefaPage.SelecionarCategoria(nomeCategoria);
 
             criarTarefaPage.SelecionarAtribuicao(atribuicaoNome);
 
