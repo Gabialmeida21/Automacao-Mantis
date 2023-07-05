@@ -1,7 +1,9 @@
 ﻿using CSharpSeleniumExtentReportNetCoreTemplate.Bases;
+using CSharpSeleniumExtentReportNetCoreTemplate.DataBaseSteps;
 using CSharpSeleniumExtentReportNetCoreTemplate.Flows;
 using CSharpSeleniumExtentReportNetCoreTemplate.Pages;
 using NUnit.Framework;
+using OpenQA.Selenium.DevTools.V112.Cast;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +17,10 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
     {
 
         #region Pages and Flows Objects
-        LoginPage loginPage;
         MainPage mainPage;
         GerenciarProjetosPage gerenciarProjetosPage;
         ProjetoFlows projetoFlows;
+        TarefaFlows tarefaFlows;
         #endregion
 
         [SetUp]
@@ -28,17 +30,21 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             loginFlows.EfetuarLogin("administrator", "administrator");
         }
 
+        #region Parameters
+        string nomeProjeto = "Teste de Automação Mantis";
+        string descricaoProjeto = "Teste de automação Web";
+        string mensagemSucesso = "Operação realizada com sucesso.";
+        string nomeCategoria = "Categoria Teste Automação";
+        #endregion
+
+
         [Test]
         public void CriarProjetoComSucesso()
         {
             gerenciarProjetosPage = new GerenciarProjetosPage();
             mainPage = new MainPage();
 
-            #region Parameters
-            string nomeProjeto = "Gabriela Teste Automação2";
-            string descricaoProjeto = "Teste de automação Web";
-            string mensagemSucesso = "Operação realizada com sucesso.";
-            #endregion
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
 
             mainPage.ClicarMenuGerenciar();
             gerenciarProjetosPage.AbaGerenciarProjetos();
@@ -48,6 +54,8 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarProjetosPage.ClicarAdicionarProjeto();
 
             Assert.AreEqual(mensagemSucesso, gerenciarProjetosPage.RetornaMensagemSucesso());
+
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
         }
 
         [Test]
@@ -57,14 +65,19 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             mainPage = new MainPage();
             projetoFlows = new ProjetoFlows();
 
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
+            projetoFlows.CriarNovoProjeto(nomeProjeto);
+
             mainPage.ClicarMenuGerenciar();
             gerenciarProjetosPage.AbaGerenciarProjetos();
             gerenciarProjetosPage.CriarNovoProjeto();
-            gerenciarProjetosPage.PreencherNomeProjeto("Gabriela Teste Automação");
-            gerenciarProjetosPage.PreencherDescricaoProjeto("Teste de automação Web");
+            gerenciarProjetosPage.PreencherNomeProjeto(nomeProjeto);
+            gerenciarProjetosPage.PreencherDescricaoProjeto(descricaoProjeto);
             gerenciarProjetosPage.ClicarAdicionarProjeto();
 
             Assert.That(gerenciarProjetosPage.RetornaMensagemErro().Contains("Um projeto com este nome já existe. Por favor, volte e entre um nome diferente."));
+
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
         }
 
         [Test]
@@ -72,16 +85,103 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         {
             gerenciarProjetosPage = new GerenciarProjetosPage();
             mainPage = new MainPage();
+            projetoFlows = new ProjetoFlows();
 
-            string nomeProjetoAposAlterar = "46 teste";
+            string nomeProjetoAposAlterar = "Teste Alteração Projeto";
+
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
+            ProjetosDBSteps.DeletarProjeto(nomeProjetoAposAlterar);
+            projetoFlows.CriarNovoProjeto(nomeProjeto);
 
             mainPage.ClicarMenuGerenciar();
             gerenciarProjetosPage.AbaGerenciarProjetos();
-            gerenciarProjetosPage.ClicarNomeProjeto();
-            gerenciarProjetosPage.AlterarNomeProjeto(" teste");
+            gerenciarProjetosPage.ClicarNomeProjeto(nomeProjeto);
+            gerenciarProjetosPage.ApagarNomeProjeto();
+            gerenciarProjetosPage.AlterarNomeProjeto(nomeProjetoAposAlterar);
             gerenciarProjetosPage.ClicarAtualizarProjeto();
 
-            Assert.AreEqual(nomeProjetoAposAlterar, gerenciarProjetosPage.RetornaNomeProjetoAposAlteracao());
+            Assert.AreEqual(nomeProjetoAposAlterar, gerenciarProjetosPage.RetornaNomeProjetoAposAlteracao(nomeProjetoAposAlterar));
+
+            ProjetosDBSteps.DeletarProjeto(nomeProjetoAposAlterar);
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
+        }
+
+        [Test]
+        public void AlterarEstadoProjetoParaEstavel()
+        {
+            gerenciarProjetosPage = new GerenciarProjetosPage();
+            mainPage = new MainPage();
+            projetoFlows = new ProjetoFlows();
+
+            #region Parameters
+            string estado = "estável";
+            string idEstado = "50";
+            #endregion
+
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
+            projetoFlows.CriarNovoProjeto(nomeProjeto);
+
+            mainPage.ClicarMenuGerenciar();
+            gerenciarProjetosPage.AbaGerenciarProjetos();
+            gerenciarProjetosPage.ClicarNomeProjeto(nomeProjeto);
+            gerenciarProjetosPage.PreencherEstadoProjeto(estado);
+            gerenciarProjetosPage.ClicarAtualizarProjeto();
+
+            Assert.AreEqual(idEstado, ProjetosDBSteps.RetornarEstadoProjeto(nomeProjeto));
+
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
+        }
+
+        [Test]
+        public void AlterarEstadoProjetoParaRelease()
+        {
+            gerenciarProjetosPage = new GerenciarProjetosPage();
+            mainPage = new MainPage();
+            projetoFlows = new ProjetoFlows();
+
+            #region Parameters
+            string estado = "release";
+            string idEstado = "30";
+            #endregion
+
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
+            projetoFlows.CriarNovoProjeto(nomeProjeto);
+
+            mainPage.ClicarMenuGerenciar();
+            gerenciarProjetosPage.AbaGerenciarProjetos();
+            gerenciarProjetosPage.ClicarNomeProjeto(nomeProjeto);
+            gerenciarProjetosPage.PreencherEstadoProjeto(estado);
+            gerenciarProjetosPage.ClicarAtualizarProjeto();
+
+            Assert.AreEqual(idEstado, ProjetosDBSteps.RetornarEstadoProjeto(nomeProjeto));
+
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
+        }
+
+        [Test]
+        public void AlterarEstadoProjetoParaObsoleto()
+        {
+            gerenciarProjetosPage = new GerenciarProjetosPage();
+            mainPage = new MainPage();
+            projetoFlows = new ProjetoFlows();
+
+            #region Parameters
+            string estado = "obsoleto";
+            string idEstado = "70";
+            #endregion
+
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
+            projetoFlows.CriarNovoProjeto(nomeProjeto);
+
+            mainPage.ClicarMenuGerenciar();
+            gerenciarProjetosPage.AbaGerenciarProjetos();
+            gerenciarProjetosPage.ClicarNomeProjeto(nomeProjeto);
+            gerenciarProjetosPage.PreencherEstadoProjeto(estado);
+            gerenciarProjetosPage.ClicarAtualizarProjeto();
+
+            Assert.AreEqual(idEstado, ProjetosDBSteps.RetornarEstadoProjeto(nomeProjeto));
+
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
         }
 
         [Test]
@@ -89,17 +189,23 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         {
             gerenciarProjetosPage = new GerenciarProjetosPage();
             mainPage = new MainPage();
+            projetoFlows = new ProjetoFlows();
+
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
+            projetoFlows.CriarNovoProjeto(nomeProjeto);
 
             mainPage.ClicarMenuGerenciar();
             gerenciarProjetosPage.AbaGerenciarProjetos();
-            gerenciarProjetosPage.ClicarNomeProjetoParaApagar();
+            gerenciarProjetosPage.ClicarNomeProjetoParaApagar(nomeProjeto);
             gerenciarProjetosPage.ApagarProjeto();
             gerenciarProjetosPage.ApagarProjeto();
 
-            //fazer validação no banco de dados
+            Assert.Null(ProjetosDBSteps.RetornarProjeto(nomeProjeto));
+
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
         }
 
-        /*[Test]
+        [Test]
         public void AdicionarSubProjeto()
         {
 
@@ -108,38 +214,41 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             projetoFlows = new ProjetoFlows();
 
             #region Parameters
-            string nomeProjeto = "Adicionar Sub Projeto Automação";
-            string descricaoProjeto = "Teste de automação Web";
-
-            string mensagemSucesso = "Operação realizada com sucesso.";
+            string nomeSubProjeto = "SubProjeto Automação Mantis";
             #endregion
 
-            projetoFlows.CriarNovoProjeto();
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
+            ProjetosDBSteps.DeletarProjeto(nomeSubProjeto);
+            projetoFlows.CriarNovoProjeto(nomeProjeto);
+
             mainPage.ClicarMenuGerenciar();
             gerenciarProjetosPage.AbaGerenciarProjetos();
-            gerenciarProjetosPage.CriarNovoProjeto();
-            gerenciarProjetosPage.PreencherNomeProjeto(nomeProjeto);
+            gerenciarProjetosPage.ClicarNomeProjeto(nomeProjeto);
+            gerenciarProjetosPage.ClicarCriarNovoSubprojeto();
+            gerenciarProjetosPage.PreencherNomeProjeto(nomeSubProjeto);
             gerenciarProjetosPage.PreencherDescricaoProjeto(descricaoProjeto);
             gerenciarProjetosPage.ClicarAdicionarProjeto();
 
             Assert.AreEqual(mensagemSucesso, gerenciarProjetosPage.RetornaMensagemSucesso());
-        }*/
+
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
+            ProjetosDBSteps.DeletarProjeto(nomeSubProjeto);
+        }
 
         [Test]
-        public void AdicionarCategoria()
+        public void CadastrarCategoria()
         {
             gerenciarProjetosPage = new GerenciarProjetosPage();
             mainPage = new MainPage();
-
-            string nomeAposAdicionarCategoria = "Categoria Teste Automação";
-
+            
+            ProjetosDBSteps.DeletarCategoria(nomeCategoria);
+            
             mainPage.ClicarMenuGerenciar();
             gerenciarProjetosPage.AbaGerenciarProjetos();
-            gerenciarProjetosPage.PreencherNomeCategoria("Categoria Teste Automação");
+            gerenciarProjetosPage.PreencherNomeCategoria(nomeCategoria);
             gerenciarProjetosPage.ClicarAdicionarCategoria();
 
-            Assert.AreEqual(nomeAposAdicionarCategoria, gerenciarProjetosPage.RetornaNomeCategoria());
-                                    
+            Assert.AreEqual(nomeCategoria, ProjetosDBSteps.RetornarCategoria(nomeCategoria));
         }
 
         [Test]
@@ -147,15 +256,19 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         {
             gerenciarProjetosPage = new GerenciarProjetosPage();
             mainPage = new MainPage();
+            projetoFlows = new ProjetoFlows();
 
-            
+            ProjetosDBSteps.DeletarCategoria(nomeCategoria);
+            projetoFlows.CriarCategoria(nomeCategoria);
+
             mainPage.ClicarMenuGerenciar();
             gerenciarProjetosPage.AbaGerenciarProjetos();
-            gerenciarProjetosPage.PreencherNomeCategoria("Categoria Teste Automação");
+            gerenciarProjetosPage.PreencherNomeCategoria(nomeCategoria);
             gerenciarProjetosPage.ClicarAdicionarCategoria();
 
             Assert.That(gerenciarProjetosPage.RetornaMensagemErroAoNaoPreencherCampo().Contains("Uma categoria com este nome já existe."));
 
+            ProjetosDBSteps.DeletarCategoria(nomeCategoria);
         }
 
         [Test]
@@ -164,13 +277,15 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarProjetosPage = new GerenciarProjetosPage();
             mainPage = new MainPage();
 
-            
+            ProjetosDBSteps.DeletarCategoria(nomeCategoria);
+
             mainPage.ClicarMenuGerenciar();
             gerenciarProjetosPage.AbaGerenciarProjetos();
             gerenciarProjetosPage.ClicarAdicionarCategoria();
 
             Assert.That(gerenciarProjetosPage.RetornaMensagemErroAoNaoPreencherCampo().Contains("Um campo necessário 'Categoria' estava vazio. Por favor, verifique novamente suas entradas."));
 
+            ProjetosDBSteps.DeletarCategoria(nomeCategoria);
         }
 
         [Test]
@@ -179,6 +294,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarProjetosPage = new GerenciarProjetosPage();
             mainPage = new MainPage();
 
+            ProjetosDBSteps.DeletarCategoria(nomeCategoria);
 
             mainPage.ClicarMenuGerenciar();
             gerenciarProjetosPage.AbaGerenciarProjetos();
@@ -186,28 +302,66 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
 
             Assert.That(gerenciarProjetosPage.RetornaMensagemErroAoNaoPreencherCampo().Contains("Um campo necessário 'Categoria' estava vazio. Por favor, verifique novamente suas entradas."));
 
+            ProjetosDBSteps.DeletarCategoria(nomeCategoria);
         }
 
-        /*public void AlterarCategoria()
+        [Test]
+        public void ApagarCategoriaVinculadaATarefa()
         {
             gerenciarProjetosPage = new GerenciarProjetosPage();
             mainPage = new MainPage();
+            projetoFlows = new ProjetoFlows();
+            tarefaFlows = new TarefaFlows();
 
-            string mensagemSucessoAlterarCategoria = "";
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
+            ProjetosDBSteps.DeletarCategoria(nomeCategoria);
+            projetoFlows.CriarNovoProjeto(nomeProjeto);
+            projetoFlows.CriarCategoria(nomeCategoria);
+            tarefaFlows.CriarNovaTarefa(nomeProjeto, nomeCategoria);
+
+            
+            mainPage.ClicarMenuGerenciar();
+            gerenciarProjetosPage.AbaGerenciarProjetos();
+            gerenciarProjetosPage.ClicarApagarCategoria(nomeCategoria);
+
+            Assert.That(gerenciarProjetosPage.RetornaMensagemErroAoNaoPreencherCampo().Contains($"Categoria \"{nomeCategoria}\" não pode ser deletada, pois está associada com outro ou mais problemas."));
+
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
+            ProjetosDBSteps.DeletarCategoria(nomeCategoria);
+        }
+
+        [Test]
+        public void AlterarCategoria()
+        {
+            gerenciarProjetosPage = new GerenciarProjetosPage();
+            mainPage = new MainPage();
+            projetoFlows = new ProjetoFlows();
+            tarefaFlows = new TarefaFlows();
+
+            #region Parameters
+            string nomeTarefa = "Tarefa de Teste Mantis2";
+            string nomeCategoriaAposEditar = "Categoria Teste Automação Edição";
+            #endregion
+
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
+            ProjetosDBSteps.DeletarCategoria(nomeCategoria);
+            TarefasDBSteps.DeletarTarefa(nomeTarefa);
+            projetoFlows.CriarNovoProjeto(nomeProjeto);
+            projetoFlows.CriarCategoria(nomeCategoria);
+            tarefaFlows.CriarNovaTarefa(nomeProjeto, nomeCategoria);
 
             mainPage.ClicarMenuGerenciar();
             gerenciarProjetosPage.AbaGerenciarProjetos();
-            gerenciarProjetosPage.PreencherNomeCategoria("Categoria Teste Automação");
-            gerenciarProjetosPage.ClicarAdicionarCategoria();
+            gerenciarProjetosPage.ClicarEditarCategoria(nomeCategoria);
+            gerenciarProjetosPage.ApagarNomeCategoriaEditar();
+            gerenciarProjetosPage.PreencherNomeCategoriaEditar(nomeCategoriaAposEditar);
+            gerenciarProjetosPage.ClicarAtualizarCategoria();
 
-            Assert.AreEqual(nomeAposAdicionarCategoria, gerenciarProjetosPage.RetornaNomeCategoria());
+            Assert.AreEqual(mensagemSucesso, gerenciarProjetosPage.RetornaMensagemSucesso());
 
-        }*/
-
-
-
-
-
-
+            ProjetosDBSteps.DeletarProjeto(nomeProjeto);
+            ProjetosDBSteps.DeletarCategoria(nomeCategoriaAposEditar);
+            TarefasDBSteps.DeletarTarefa(nomeTarefa);
+        }
     }
 }

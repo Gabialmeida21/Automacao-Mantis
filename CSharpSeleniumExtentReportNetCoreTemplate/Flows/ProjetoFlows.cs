@@ -33,6 +33,14 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Flows
             gerenciarProjetosPage.ClicarAdicionarProjeto();
         }
 
+        public void CriarCategoria(string nomeCategoria)
+        {
+            mainPage.ClicarMenuGerenciar();
+            gerenciarProjetosPage.AbaGerenciarProjetos();
+            gerenciarProjetosPage.PreencherNomeCategoria(nomeCategoria);
+            gerenciarProjetosPage.ClicarAdicionarCategoria();
+        }
+
         
     }
 }
