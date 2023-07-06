@@ -19,9 +19,9 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Flows
         }
         #endregion
 
-        //public string nomeProjeto = "Teste de Automação Web";
+        #region Parameteres
         public string descricaoProjeto = "Teste de automação Mantis";
-        
+        #endregion
 
         public void CriarNovoProjeto(string nomeProjeto)
         {

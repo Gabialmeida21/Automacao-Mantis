@@ -22,12 +22,9 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         By nomeCategoriaText = By.XPath("//input[@class='input-sm']");
         By adicionarCategoriaButton = By.XPath("//input[@value='Adicionar Categoria']");
         By validarCategoriaAposAdicionar = By.XPath("//div[@id='categories']//table[@class='table table-striped table-bordered table-condensed table-hover']//td[contains(text(), 'Categoria Teste Automação')]");
-        //By nomeProjetoLink = By.XPath("//table[@class='table table-striped table-bordered table-condensed table-hover']//td//a[text()='46']");
         By alterarNomeProjetoText = By.XPath("//input[@id='project-name']");
-        //By nomeProjetoAposAlteracaoLink = By.XPath("//table[@class='table table-striped table-bordered table-condensed table-hover']//td//a[text()='46 teste']");
         By atualizarProjetoButton = By.XPath("//input[@value='Atualizar Projeto']");
         By removerProjetoButton = By.XPath("//input[@value='Apagar Projeto']");
-        //By nomeProjetoParaSerRemovido = By.XPath("//table[@class='table table-striped table-bordered table-condensed table-hover']//td//a[text()='Projeto para ser removido']");
         By mensagemErroAoAdicionarCategoriaSemPreencherCampo = By.XPath("//div[@class='alert alert-danger']/p[2]");
         By adicionarEEditarCategoriaSemPreencherCampoButton = By.XPath("//input[@value='Adicionar e editar Categoria']");
         By criarNovoSubprojetoButton = By.XPath("//button[text()='Criar novo Subprojeto']");
