@@ -53,5 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Queries\Marcadores\" />
+    <Folder Include="Queries\PerfisGlobais\" />
   </ItemGroup>
 </Project>

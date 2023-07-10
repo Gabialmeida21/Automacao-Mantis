@@ -44,14 +44,14 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
             Click(criarNovoProjetoButton);
         }
 
-        public void PreencherNomeProjeto(string text)
+        public void PreencherNomeProjeto(string nomeProjeto)
         {
-            SendKeys(nomeProjetoText, text);
+            SendKeys(nomeProjetoText, nomeProjeto);
         }
 
-        public void PreencherDescricaoProjeto(string text)
+        public void PreencherDescricaoProjeto(string descricaoProjeto)
         {
-            SendKeys(descricaoProjetoText, text);
+            SendKeys(descricaoProjetoText, descricaoProjeto);
         }
 
         public void ClicarAdicionarProjeto()
@@ -69,9 +69,9 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
             return GetText(mensagemErro);
         }
 
-        public void PreencherNomeCategoria(string text)
+        public void PreencherNomeCategoria(string nomeCategoria)
         {
-            SendKeys(nomeCategoriaText, text);
+            SendKeys(nomeCategoriaText, nomeCategoria);
         }
 
         public void ClicarAdicionarCategoria()
@@ -90,9 +90,9 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
             Click(nomeProjetoLink);
         }
 
-        public void AlterarNomeProjeto(string text)
+        public void AlterarNomeProjeto(string nomeProjetoAlterado)
         {
-            SendKeys(alterarNomeProjetoText, text);
+            SendKeys(alterarNomeProjetoText, nomeProjetoAlterado);
         }
 
         public void ApagarNomeProjeto()

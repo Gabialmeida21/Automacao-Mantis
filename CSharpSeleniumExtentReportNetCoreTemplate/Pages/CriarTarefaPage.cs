@@ -24,10 +24,9 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
 
         #endregion
 
-        public void SelecionarProjeto(String text)
-
+        public void SelecionarProjeto(String projeto)
         {
-            ComboBoxSelectByVisibleText(selecionarProjetoComboBox, text);
+            ComboBoxSelectByVisibleText(selecionarProjetoComboBox, projeto);
         }
            
                 
