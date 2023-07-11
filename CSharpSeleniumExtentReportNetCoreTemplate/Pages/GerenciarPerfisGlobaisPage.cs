@@ -23,10 +23,13 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         By enviarButton = By.XPath("//input[@value='Enviar']");
         By editarNomePlataformaText = By.Name("platform");
         By atualizarPerfilButton = By.XPath("//input[@value='Atualizar Perfil']");
+        By editarnomeSOText = By.Name("os");
+        By editarVersaoSOText = By.Name("os_build");
+        By editarDescricaoAdicionalText = By.XPath("//textarea[@name='description']");
         #endregion
 
         public void AbaGerenciarPerfisGlobais()
-        {
+        {//textarea[@name='description']
             Click(abaGerenciarPerfisGlobais);
         }
 
@@ -88,6 +91,36 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         public void ClicarAtualizarPerfil()
         {
             Click(atualizarPerfilButton);
+        }
+
+        public void ApagarNomeSO()
+        {
+            Clear(editarnomeSOText);
+        }
+
+        public void EditarNomeSO(string nomeSOEditado)
+        {
+            SendKeys(editarnomeSOText, nomeSOEditado);
+        }
+
+        public void ApagarVersaoSO()
+        {
+            Clear(editarVersaoSOText);
+        }
+
+        public void EditarVersaoSO(string versaoSOEditado)
+        {
+            SendKeys(editarVersaoSOText, versaoSOEditado);
+        }
+
+        public void ApagarDescricao()
+        {
+            Clear(editarDescricaoAdicionalText);
+        }
+
+        public void EditarDescricao(string descricao)
+        {
+            SendKeys(editarDescricaoAdicionalText, descricao);
         }
     }
 }

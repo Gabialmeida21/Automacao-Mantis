@@ -56,7 +56,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         }
 
         [Test]
-        public void EditarPerfil()
+        public void EditarPerfilNomePlataforma()
         {
             gerenciarPerfisGlobaisPage = new GerenciarPerfisGlobaisPage();
             mainPage = new MainPage();
@@ -85,6 +85,93 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         }
 
         [Test]
+        public void EditarPerfilNomeSO()
+        {
+            gerenciarPerfisGlobaisPage = new GerenciarPerfisGlobaisPage();
+            mainPage = new MainPage();
+            perfilGlobaisFlows = new PerfilGlobaisFlows();
+
+            #region Parameters
+            string nomePlataformaCombo = $"{nomePlataforma} {nomeSO} {versaoSO}";
+            string nomeSOEditado = "Linux";
+            #endregion
+
+            PerfisGlobaisDBSteps.DeletarPerfisGlobais(nomePlataforma);
+            PerfisGlobaisDBSteps.DeletarPerfisGlobais(nomeSOEditado);
+            perfilGlobaisFlows.CriarNovoPerfil(nomePlataforma);
+
+            gerenciarPerfisGlobaisPage.ClicarEditarPerfil();
+            gerenciarPerfisGlobaisPage.SelecionarPerfil(nomePlataformaCombo);
+            gerenciarPerfisGlobaisPage.ClicarEnviar();
+            gerenciarPerfisGlobaisPage.ApagarNomeSO();
+            gerenciarPerfisGlobaisPage.EditarNomeSO(nomeSOEditado);
+            gerenciarPerfisGlobaisPage.ClicarAtualizarPerfil();
+
+            Assert.AreEqual(nomeSOEditado, PerfisGlobaisDBSteps.RetornarPerfisGlobaisOS(nomePlataforma));
+
+            PerfisGlobaisDBSteps.DeletarPerfisGlobais(nomePlataforma);
+            PerfisGlobaisDBSteps.DeletarPerfisGlobais(nomeSOEditado);
+        }
+
+        [Test]
+        public void EditarPerfilVersaoSO()
+        {
+            gerenciarPerfisGlobaisPage = new GerenciarPerfisGlobaisPage();
+            mainPage = new MainPage();
+            perfilGlobaisFlows = new PerfilGlobaisFlows();
+
+            #region Parameters
+            string nomePlataformaCombo = $"{nomePlataforma} {nomeSO} {versaoSO}";
+            string versaoSOEditada = "Versão 10";
+            #endregion
+
+            PerfisGlobaisDBSteps.DeletarPerfisGlobais(nomePlataforma);
+            PerfisGlobaisDBSteps.DeletarPerfisGlobais(versaoSOEditada);
+            perfilGlobaisFlows.CriarNovoPerfil(nomePlataforma);
+
+            gerenciarPerfisGlobaisPage.ClicarEditarPerfil();
+            gerenciarPerfisGlobaisPage.SelecionarPerfil(nomePlataformaCombo);
+            gerenciarPerfisGlobaisPage.ClicarEnviar();
+            gerenciarPerfisGlobaisPage.ApagarVersaoSO();
+            gerenciarPerfisGlobaisPage.EditarVersaoSO(versaoSOEditada);
+            gerenciarPerfisGlobaisPage.ClicarAtualizarPerfil();
+
+            Assert.AreEqual(versaoSOEditada, PerfisGlobaisDBSteps.RetornarPerfisGlobaisOSBuild(nomePlataforma));
+
+            PerfisGlobaisDBSteps.DeletarPerfisGlobais(nomePlataforma);
+            PerfisGlobaisDBSteps.DeletarPerfisGlobais(versaoSOEditada);
+        }
+
+        [Test]
+        public void EditarDescricao()
+        {
+            gerenciarPerfisGlobaisPage = new GerenciarPerfisGlobaisPage();
+            mainPage = new MainPage();
+            perfilGlobaisFlows = new PerfilGlobaisFlows();
+
+            #region Parameters
+            string nomePlataformaCombo = $"{nomePlataforma} {nomeSO} {versaoSO}";
+            string descricaoEditada = "Descricao Adicional sobre o SO Editada";
+            #endregion
+
+            PerfisGlobaisDBSteps.DeletarPerfisGlobais(nomePlataforma);
+            PerfisGlobaisDBSteps.DeletarPerfisGlobais(descricaoEditada);
+            perfilGlobaisFlows.CriarNovoPerfil(nomePlataforma);
+
+            gerenciarPerfisGlobaisPage.ClicarEditarPerfil();
+            gerenciarPerfisGlobaisPage.SelecionarPerfil(nomePlataformaCombo);
+            gerenciarPerfisGlobaisPage.ClicarEnviar();
+            gerenciarPerfisGlobaisPage.ApagarDescricao();
+            gerenciarPerfisGlobaisPage.EditarDescricao(descricaoEditada);
+            gerenciarPerfisGlobaisPage.ClicarAtualizarPerfil();
+
+            Assert.AreEqual(descricaoEditada, PerfisGlobaisDBSteps.RetornarPerfisGlobaisDescription(nomePlataforma));
+
+            PerfisGlobaisDBSteps.DeletarPerfisGlobais(nomePlataforma);
+            PerfisGlobaisDBSteps.DeletarPerfisGlobais(descricaoEditada);
+        }
+
+        [Test]
         public void ApagarPerfil()
         {
             gerenciarPerfisGlobaisPage = new GerenciarPerfisGlobaisPage();
@@ -106,5 +193,6 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
 
             PerfisGlobaisDBSteps.DeletarPerfisGlobais(nomePlataforma);
         }
+
     }
 }

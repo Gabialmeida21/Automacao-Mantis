@@ -11,7 +11,6 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.DataBaseSteps
     {
         public static string RetornarPerfisGlobais(string namePlatform)
         {
-
             string queryFile = GeneralHelpers.GetProjectPath() + @"Queries/PerfisGlobais/RetornarPerfisGlobais.sql";
 
             string query = GeneralHelpers.ReplaceValueInFile(queryFile, "{platform}", namePlatform);
@@ -21,7 +20,39 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.DataBaseSteps
             return dadosQuery.FirstOrDefault();
         }
 
-        public static void DeletarPerfisGlobais(string namePlatform)
+        public static string RetornarPerfisGlobaisOS(string namePlatform)
+        {
+            string queryFile = GeneralHelpers.GetProjectPath() + @"Queries/PerfisGlobais/RetornarPerfisGlobais.sql";
+
+            string query = GeneralHelpers.ReplaceValueInFile(queryFile, "{platform}", namePlatform);
+
+            List<string> dadosQuery = DataBaseHelpers.RetornaDadosQuery(query);
+
+            return dadosQuery[1];
+        }
+
+        public static string RetornarPerfisGlobaisOSBuild(string namePlatform)
+        {
+            string queryFile = GeneralHelpers.GetProjectPath() + @"Queries/PerfisGlobais/RetornarPerfisGlobais.sql";
+
+            string query = GeneralHelpers.ReplaceValueInFile(queryFile, "{platform}", namePlatform);
+
+            List<string> dadosQuery = DataBaseHelpers.RetornaDadosQuery(query);
+
+            return dadosQuery[2];
+        }
+        public static string RetornarPerfisGlobaisDescription(string namePlatform)
+        {
+            string queryFile = GeneralHelpers.GetProjectPath() + @"Queries/PerfisGlobais/RetornarPerfisGlobais.sql";
+
+            string query = GeneralHelpers.ReplaceValueInFile(queryFile, "{platform}", namePlatform);
+
+            List<string> dadosQuery = DataBaseHelpers.RetornaDadosQuery(query);
+
+            return dadosQuery[3];
+        }
+
+            public static void DeletarPerfisGlobais(string namePlatform)
         {
             string queryFile = GeneralHelpers.GetProjectPath() + @"Queries/PerfisGlobais/DeletarPerfisGlobais.sql";
 
