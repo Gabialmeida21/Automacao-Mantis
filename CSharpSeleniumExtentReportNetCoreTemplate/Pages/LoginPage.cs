@@ -37,6 +37,21 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         {
             return GetText(mensagemErroTextArea);
         }
+
+        public void PreencherUsuarioJS(string usuario)
+        {
+            SendKeysJavaScript(usernameField, usuario);
+        }
+
+        public void PreencherSenhaJS(string senha)
+        {
+            SendKeysJavaScript(passwordField, senha);
+        }
+
+        public void ClicarEmLoginJS()
+        {
+            ClickJavaScript(loginButton);
+        }
         #endregion
     }
 }

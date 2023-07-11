@@ -15,7 +15,6 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
     [TestFixture]
     public class GerenciarProjetosTest : TestBase
     {
-
         #region Pages and Flows Objects
         MainPage mainPage;
         GerenciarProjetosPage gerenciarProjetosPage;
@@ -36,7 +35,6 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         string mensagemSucesso = "Operação realizada com sucesso.";
         string nomeCategoria = "Categoria Teste Automação";
         #endregion
-
 
         [Test]
         public void CriarProjetoComSucesso()

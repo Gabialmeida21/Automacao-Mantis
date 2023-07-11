@@ -37,8 +37,6 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         By apagarContaButton = By.XPath("//input[@value='Apagar Conta']");
         By representarUsuarioButton = By.XPath("//input[@value='Representar Usuário']");
         By cliqueAquiParaProsseguirButton = By.XPath("//a[@href='my_view_page.php']");
-        
-
         #endregion
 
         public void AbaGerenciarUsuario()
@@ -51,24 +49,24 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
             Click(criarNovaContaButton);
         }
 
-        public void PreencherNomeUsuario(string text)
+        public void PreencherNomeUsuario(string nomeUsuario)
         {
-            SendKeys(nomeUsuarioText, text);
+            SendKeys(nomeUsuarioText, nomeUsuario);
         }
 
-        public void PreencherNomeVerdadeiro(string text)
+        public void PreencherNomeVerdadeiro(string nomeVerdadeiro)
         {
-            SendKeys(nomeVerdadeiroText, text);
+            SendKeys(nomeVerdadeiroText, nomeVerdadeiro);
         }
 
-        public void PreencherEmail(string text)
+        public void PreencherEmail(string email)
         {
-            SendKeys(emailText, text);
+            SendKeys(emailText, email);
         }
 
-        public void SelecionarNivelAcesso(string text)
+        public void SelecionarNivelAcesso(string nivelAcesso)
         {
-            ComboBoxSelectByVisibleText(nivelAcessoDropDown, text);
+            ComboBoxSelectByVisibleText(nivelAcessoDropDown, nivelAcesso);
         }
 
         public void ClicarHabilitado()
@@ -105,9 +103,9 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         {
             Click(filtroUsuarioText);
         }
-        public void PreencherFiltroPesquisarUsuario(string text)
+        public void PreencherFiltroPesquisarUsuario(string filtroPesquisarUsuario)
         {
-            SendKeys(filtroUsuarioText, text);
+            SendKeys(filtroUsuarioText, filtroPesquisarUsuario);
         }
 
         public void ClicarAplicarFiltro()
@@ -131,9 +129,9 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
             return GetText(mensagemConfirmarEditarUsuario);
         }
 
-        public void SelecionarNivelAcessoAoEditar(string text)
+        public void SelecionarNivelAcessoAoEditar(string nivelAcessoEditar)
         {
-            ComboBoxSelectByVisibleText(nivelAcessoEditarDropDown, text);
+            ComboBoxSelectByVisibleText(nivelAcessoEditarDropDown, nivelAcessoEditar);
         }
 
         public void ApagarNomeUsuarioAoEditar()
@@ -141,9 +139,9 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
             Clear(editarNomeUsuarioText);
         }
 
-        public void EditarNomeUsuario(string text)
+        public void EditarNomeUsuario(string nomeUsuarioEditar)
         {
-            SendKeys(editarNomeUsuarioText, text);
+            SendKeys(editarNomeUsuarioText, nomeUsuarioEditar);
         }
 
         public void ApagarEmailAoEditar()
@@ -151,9 +149,9 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
             Clear(emailText);
         }
 
-        public void EditarEmail(string text)
+        public void EditarEmail(string emailEditar)
         {
-            SendKeys(emailText, text);
+            SendKeys(emailText, emailEditar);
         }
 
         public void ApagarNomeVerdadeiro()
@@ -161,14 +159,14 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
             Clear(editarNomeVerdadeiroText);
         }
 
-        public void EditarNomeVerdadeiro(string text)
+        public void EditarNomeVerdadeiro(string nomeVerdadeiroEditar)
         {
-            SendKeys(editarNomeVerdadeiroText, text);
+            SendKeys(editarNomeVerdadeiroText, nomeVerdadeiroEditar);
         }
 
-        public void EditarSelecionarNivelAcesso(string text)
+        public void EditarSelecionarNivelAcesso(string nivelAcessoEditar)
         {
-            ComboBoxSelectByVisibleText(editarNivelAcessoDropDown, text);
+            ComboBoxSelectByVisibleText(editarNivelAcessoDropDown, nivelAcessoEditar);
         }
 
         public void ClicarRedefinirSenha()

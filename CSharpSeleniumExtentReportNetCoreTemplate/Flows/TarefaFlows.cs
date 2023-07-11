@@ -29,25 +29,15 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Flows
         public void CriarNovaTarefa(string nomeProjeto, string nomeCategoria)
         {
             mainPage.ClicarSelecionarProjetoGeral();
-
             mainPage.SelecionarTodosOsProjetos();
-
             mainPage.ClicarMenuCriarTarefa();
-
             criarTarefaPage.SelecionarProjeto(nomeProjeto);
-
             criarTarefaPage.ClicarBotaoSelecionarProjeto();
-
             criarTarefaPage.SelecionarCategoria(nomeCategoria);
-
             criarTarefaPage.SelecionarAtribuicao(atribuicaoNome);
-
             criarTarefaPage.PreencherResumo(resumo);
-
             criarTarefaPage.PreencherDescricao(descricao);
-
             criarTarefaPage.PreencherPassosParaReproduzir(passosReproduzir);
-
             criarTarefaPage.ClicarBotaoCriarNovaTarefa();
         }
 

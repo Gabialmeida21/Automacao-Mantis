@@ -29,7 +29,6 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         string nivelAcesso = "desenvolvedor";
         #endregion
 
-
         [SetUp]
         public void RealizarLogin()
         {
@@ -60,6 +59,8 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarCriarUsuario();
 
             Assert.That(gerenciarUsuariosPage.RetornaMensagemSucesso().Contains("criado com um nível de acesso de desenvolvedor"));
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
         }
 
         [Test]
@@ -98,6 +99,8 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarCriarUsuario();
 
             Assert.That(gerenciarUsuariosPage.RetornaMensagemErroUsuarioExistente().Contains("Este nome de usuário já está sendo usado. Por favor, volte e selecione um outro."));
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
         }
 
         [Test]
@@ -118,6 +121,8 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarCriarUsuario();
 
             Assert.That(gerenciarUsuariosPage.RetornaMensagemSucesso().Contains("criado com um nível de acesso de desenvolvedor"));
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
         }
 
         [Test]
@@ -137,6 +142,8 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarCriarUsuario();
 
             Assert.That(gerenciarUsuariosPage.RetornaMensagemSucesso().Contains("criado com um nível de acesso de desenvolvedor"));
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
         }
 
         [Test]
@@ -164,6 +171,8 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarCriarUsuario();
 
             Assert.That(gerenciarUsuariosPage.RetornaMensagemErro().Contains("Este e-mail já está sendo usado. Por favor, volte e selecione outro."));
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
         }
 
         [Test]
@@ -188,6 +197,8 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarCriarUsuario();
 
             Assert.That(gerenciarUsuariosPage.RetornaMensagemErro().Contains("E-mail inválido."));
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
         }
 
         [Test]
@@ -214,6 +225,8 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarBotaoAtualizarUsuario();
 
             Assert.AreEqual(mensagemSucessoEditarUsuario, gerenciarUsuariosPage.RetornaMensagemSucessoOperacaoRealizada());
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
         }
 
         [Test]
@@ -244,6 +257,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             Assert.AreEqual(mensagemSucessoEditarUsuario, gerenciarUsuariosPage.RetornaMensagemSucessoOperacaoRealizada());
            
             UsuariosDBSteps.DeletarUsuarioCriado(editarNomeUsuario);
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
         }
 
         [Test]
@@ -273,6 +287,9 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarBotaoAtualizarUsuario();
 
             Assert.That(gerenciarUsuariosPage.RetornaMensagemErroUsuarioExistente().Contains("Este nome de usuário já está sendo usado. Por favor, volte e selecione um outro."));
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuarioExistente);
         }
 
         [Test]
@@ -289,6 +306,7 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
 
             UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
             usuarioFlows.CriarNovoUsuario(nomeUsuario, email);
+
             mainPage.ClicarMenuGerenciar();
             gerenciarUsuariosPage.AbaGerenciarUsuario();
             gerenciarUsuariosPage.PreencherFiltroPesquisarUsuario(nomeUsuario);
@@ -299,6 +317,8 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarBotaoAtualizarUsuario();
 
             Assert.AreEqual(mensagemSucessoEditarUsuario, gerenciarUsuariosPage.RetornaMensagemSucessoOperacaoRealizada());
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
         }
 
         [Test]
@@ -329,6 +349,9 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarBotaoAtualizarUsuario();
 
             Assert.That(gerenciarUsuariosPage.RetornaMensagemErro().Contains("Este e-mail já está sendo usado. Por favor, volte e selecione outro."));
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario2);
         }
 
         [Test]
@@ -355,6 +378,8 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarBotaoAtualizarUsuario();
 
             Assert.That(gerenciarUsuariosPage.RetornaMensagemErro().Contains("E-mail inválido."));
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
         }
 
         [Test]
@@ -382,6 +407,8 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarBotaoAtualizarUsuario();
 
             Assert.AreEqual(mensagemSucessoEditarUsuario, gerenciarUsuariosPage.RetornaMensagemSucessoOperacaoRealizada());
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
         }
 
         [Test]
@@ -408,6 +435,8 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarBotaoAtualizarUsuario();
                        
             Assert.AreEqual(mensagemSucessoEditarUsuario, gerenciarUsuariosPage.RetornaMensagemSucessoOperacaoRealizada());
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
         }
 
         [Test]
@@ -428,7 +457,10 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarRedefinirSenha();
 
             Assert.That(gerenciarUsuariosPage.RetornaMensagemSolicitacaoRedefinirSenha().Contains("Uma solicitação de confirmação foi enviada ao endereço de e-mail do usuário selecionado. Através deste, o usuário será capaz de alterar sua senha."));
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
         }
+
 
         [Test]
         public void ApagarUsuarioComSucesso()
@@ -453,6 +485,8 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarApagarConta();
 
             Assert.AreEqual(mensagemSucesso, gerenciarUsuariosPage.RetornaMensagemSucessoOperacaoRealizada());
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
         }
 
         [Test]
@@ -474,6 +508,8 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             gerenciarUsuariosPage.ClicarParaProsseguir();
 
             Assert.AreEqual(nomeUsuario, mainPage.RetornaUsernameDasInformacoesDeLogin());
+
+            UsuariosDBSteps.DeletarUsuarioCriado(nomeUsuario);
         }
     }
 }

@@ -22,7 +22,6 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
         {
             return GeneralHelpers.ReturnCSVData(GeneralHelpers.GetProjectPath() + "DataDriven\\Login.csv");
         }
-
         #endregion
 
         [Test]
@@ -36,23 +35,22 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
             string senha = "administrator";
             #endregion
 
-            loginPage.PreencherUsuario(usuario);
-            loginPage.ClicarEmLogin();
-            loginPage.PreencherSenha(senha);
-            loginPage.ClicarEmLogin();
+            loginPage.PreencherUsuarioJS(usuario);
+            loginPage.ClicarEmLoginJS();
+            loginPage.PreencherSenhaJS(senha);
+            loginPage.ClicarEmLoginJS();
 
             Assert.AreEqual(usuario, mainPage.RetornaUsernameDasInformacoesDeLogin());
         }
 
         [Test, TestCaseSource("Login")]
-        public void RealizarLoginComSucessoUsandoDataDrive(ArrayList testData)
+        public void RealizarLoginComSucessoUsandoDataDriven(ArrayList testData)
         {
             loginPage = new LoginPage();
             mainPage = new MainPage();
 
             #region Parameters
             string usuario = testData[0].ToString();
-            //string usuario = "administrator";
             string senha = "administrator";
             #endregion
 
@@ -135,20 +133,5 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Tests
 
             Assert.AreEqual(mensagemErro, loginPage.RetornaMensagemDeErro());
         }
-
-        /*
-        public void TesteUtilizandoQuery()
-        {
-            string descricaoProdutoRetornado;
-            string descricaoProdutoEsperado = "produto2";
-            string idProduto = "2";
-
-            List<string> retorno = ProdutosDBSteps.RetornaProduto(idProduto);
-            descricaoProdutoRetornado = retorno[0];
-
-            Assert.AreEqual(descricaoProdutoEsperado, descricaoProdutoRetornado);
-
-        }*/
-
     }
 }

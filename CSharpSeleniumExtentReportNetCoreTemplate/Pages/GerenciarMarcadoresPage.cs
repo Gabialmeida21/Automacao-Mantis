@@ -11,7 +11,6 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
     public class GerenciarMarcadoresPage : PageBase
     {
         #region Mapping
-        
         By abaGerenciarMarcadorButton = By.XPath("//a[@href='/manage_tags_page.php']");
         By criarMarcadorButton = By.XPath("//a[@href='#tagcreate']");
         By nomeMarcadorText = By.Id("tag-name");
@@ -21,7 +20,6 @@ namespace CSharpSeleniumExtentReportNetCoreTemplate.Pages
         By atualizarMarcadorButton = By.XPath("//input[@value='Atualizar Marcador']");
         By mensagemErro = By.XPath("//div[@class='alert alert-danger']/p[2]");
         #endregion
-
 
         public void ClicarAbaMarcador()
         {
