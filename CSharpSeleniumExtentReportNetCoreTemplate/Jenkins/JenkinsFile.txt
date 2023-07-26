@@ -6,7 +6,7 @@ pipeline {
     stages {      
         stage('Build Stage') { 
             steps{ 
-                bat 'echo build'
+                
                 dotnetBuild configuration: 'Debug', project: 'AutomacaoMantis.sln', sdk: '.NET 6.0', workDirectory: "${WORKSPACE}/AutomacaoMantis/"
             }
         } 
