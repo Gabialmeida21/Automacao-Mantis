@@ -3,13 +3,7 @@ pipeline {
     environment {
         nuget = "C:\\Jenkins\\nuget.exe"  
     }
-    stages {
-        stage('Git Checkout') { 
-           steps{ 
-                bat 'echo Git Checkout'
-                git branch: 'main', url: 'https://<auth>@github.com/Gabialmeida21/Automacao-Mantis.git'
-            }
-        }
+    
         
         stage('Build Stage') { 
             steps{ 
