@@ -2,9 +2,7 @@ pipeline {
     agent any
     environment {
         nuget = "C:\\Jenkins\\nuget.exe"  
-    }
-    
-        
+    }      
         stage('Build Stage') { 
             steps{ 
                 bat 'echo build'
@@ -14,4 +12,4 @@ pipeline {
         
          
     } 
-}
+
