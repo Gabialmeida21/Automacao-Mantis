@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    environment {
+        nuget = "C:\\Jenkins\\nuget.exe"  
+    }
+    stages {
+        stage('Git Checkout') { 
+           steps{ 
+                bat 'echo Git Checkout'
+                git branch: 'main', url: 'https://<auth>@github.com/Gabialmeida21/Automacao-Mantis.git'
+            }
+        }
+        
+        stage('Build Stage') { 
+            steps{ 
+                bat 'echo build'
+                dotnetBuild configuration: 'Debug', project: 'AutomacaoMantis.sln', sdk: '.NET 6.0', workDirectory: "${WORKSPACE}/AutomacaoMantis/"
+            }
+        }
+        
+         
+    } 
+}
